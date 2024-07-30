@@ -167,7 +167,14 @@ do
 			end
 		end
 	end
+	local function SaveLatestSettings()
+		if #listfiles(ConfigFolder .. "/configs/") == 0 or (isfile(ConfigFolder .. "/configs/last settings") and #listfiles(ConfigFolder .. "/configs/") == 1) then
+			writefile(ConfigFolder .. "/configs/last settings", Library:GetConfig())
+			writefile(ConfigFolder .. "/autoload.txt", "last settings")
+		end
+	end
 	function Library:Unload()
+		SaveLatestSettings()
 		setmetatable(self.Flags, nil)
 		self:SetFlagsToDefault()
 		self.ScreenGui:Destroy()
@@ -736,10 +743,7 @@ do
 			end
 			LocalPlayer.AncestryChanged:Connect(function(_, parent)
 				if not parent then
-					if #listfiles(ConfigFolder .. "/configs/") == 0 or (isfile(ConfigFolder .. "/configs/last settings") and #listfiles(ConfigFolder .. "/configs/") == 1) then
-						writefile(ConfigFolder .. "/configs/last settings", Library:GetConfig())
-						writefile(ConfigFolder .. "/autoload.txt", "last settings")
-					end
+					SaveLatestSettings()
 				end
 			end)
 		end
