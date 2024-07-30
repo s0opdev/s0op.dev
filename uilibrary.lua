@@ -65,6 +65,7 @@ local Library = {
 	FontSize = 12;
 	Notifs = {};
 	KeyList = nil;
+	KeyshitList = nil;
 	ScreenGUI = nil;
 	Folder = "soulhub/"
 }
@@ -85,18 +86,6 @@ Library.__index = Library;
 Library.Pages.__index = Library.Pages;
 Library.Sections.__index = Library.Sections;
 
-LocalPlayer.AncestryChanged:Connect(function(_, parent)
-	if not parent then
-		if #listfiles(ConfigFolder .. "/configs/") == 0 or (isfile(ConfigFolder .. "/configs/last settings") and #listfiles(ConfigFolder .. "/configs/") == 1) then
-			writefile(ConfigFolder .. "/configs/last settings", Library:GetConfig())
-			writefile(ConfigFolder .. "/autoload.txt", "last settings")
-		end
-	end
-end)
-
-if not isfolder("soulhub") then
-	makefolder("soulhub")
-end
 if not isfolder(Library.Folder) then
 	makefolder(Library.Folder)
 end
@@ -432,7 +421,7 @@ do
 			end
 		end
 	end
-    --
+	--
 	function Library:SetOpen(bool)
 		if typeof(bool) == 'boolean' then
 			userinput.MouseIconEnabled = not bool
@@ -567,6 +556,193 @@ do
 		end;
 		return KeyList
 	end
+	    --
+		function Library:LoadConfigTab(Window)
+			local Config = Window:Page({
+				Name = "Settings"
+			})
+			do
+				local Menu = Config:Section({
+					Name = "Menu",
+					Size = 120
+				})
+				local Cfgs = Config:Section({
+					Name = "Configs",
+					Size = 200,
+					Side = "Right"
+				})
+				local abc = false
+				local CurrentList = {}
+				local CFGList, loadedcfgshit, autoloadlabel, randomfunc
+				local function UpdateConfigList()
+					local List = {}
+					local SelectedConfig = Library.Flags.SettingConfigurationList
+					for idx, file in ipairs(listfiles(ConfigFolder .. "/configs")) do
+						local FileName = file:gsub(ConfigFolder .. "/configs\\", "")
+						List[#List + 1] = FileName
+					end
+					local IsNew = #List ~= #CurrentList
+					if not IsNew then
+						for idx, file in ipairs(List) do
+							if file ~= CurrentList[idx] then
+								IsNew = true
+								break
+							end
+						end
+					end
+					if IsNew then
+						CurrentList = List
+						CFGList:Refresh(CurrentList)
+					end
+					if SelectedConfig then
+						randomfunc:set("")
+						CFGList:Set(SelectedConfig)
+					end
+				end
+				Menu:Keybind({
+					Name = "UI Toggle",
+					Flag = "MenuKey",
+					Default = Enum.KeyCode.End,
+					Mode = "Toggle",
+					Callback = function()
+						abc = not abc
+						Library:SetOpen(abc)
+					end
+				})
+				Menu:Toggle({
+					Name = "Keybind List",
+					Flag = "KeybindList",
+					State = true,
+					Callback = function(v)
+						Library.KeyshitList:SetVisible(v)
+					end
+				})
+				Menu:Button({
+					Name = "Unload",
+					Callback = function()
+						Library:Unload()
+					end
+				})
+				randomfunc = Cfgs:Textbox({
+					Flag = "SettingsConfigurationName",
+					Name = "Config name"
+				})
+				Cfgs:Button({
+					Name = "Create",
+					Callback = function()
+						local ConfigName = Library.Flags.SettingsConfigurationName
+						if ConfigName ~= "" or not isfile(ConfigFolder .. "/configs/" .. ConfigName) then
+							writefile(ConfigFolder .. "/configs/" .. ConfigName, Library:GetConfig())
+							UpdateConfigList()
+							randomfunc:set("")
+							CFGList:Set(ConfigName)
+							Library:Notification("Config Created: " .. ConfigName, 3, nil, "Top")
+						end
+					end
+				})
+				CFGList = Cfgs:Dropdown({
+					Name = "Saved Configs",
+					Flag = "SettingConfigurationList",
+					Options = {}
+				})
+				if not isfolder(ConfigFolder) then
+					makefolder(ConfigFolder)
+				end
+				if not isfolder(ConfigFolder .. "/configs") then
+					makefolder(ConfigFolder .. "/configs")
+				end
+				Cfgs:Button({
+					Name = "Save",
+					Callback = function()
+						local SelectedConfig = Library.Flags.SettingConfigurationList
+						if SelectedConfig then
+							writefile(ConfigFolder .. "/configs/" .. SelectedConfig, Library:GetConfig())
+							Library:Notification("Config Saved: " .. SelectedConfig, 3, nil, "Top")
+						else
+							Library:Notification("No Config Selected!", 3, nil, "Top")
+						end
+					end
+				})
+				Cfgs:Button({
+					Name = "Load",
+					Callback = function()
+						local SelectedConfig = Library.Flags.SettingConfigurationList
+						if SelectedConfig then
+							Library:LoadConfig(readfile(ConfigFolder .. "/configs/" .. SelectedConfig))
+							CFGList:Set(SelectedConfig)
+							Library:Notification("Config Loaded: " .. SelectedConfig, 3, nil, "Top")
+						else
+							Library:Notification("No Config Selected!", 3, nil, "Top")
+						end
+					end
+				})
+				Cfgs:Button({
+					Name = "Set Auto Load",
+					Callback = function()
+						local SelectedConfig = Library.Flags.SettingConfigurationList
+						if SelectedConfig then
+							writefile(ConfigFolder .. "/autoload.txt", Library.Flags.SettingConfigurationList)
+							Library:Notification("Config Auto Loaded: " .. Library.Flags.SettingConfigurationList, 7, nil, "Top")
+							autoloadlabel:SetText("Current Auto Load: " .. Library.Flags.SettingConfigurationList)
+							loadedcfgshit = Library.Flags.SettingConfigurationList
+						else
+							Library:Notification("No Config Selected!", 3, nil, "Top")
+						end
+					end
+				})
+				Cfgs:Button({
+					Name = "Delete",
+					Callback = function()
+						local SelectedConfig = Library.Flags.SettingConfigurationList
+						if SelectedConfig then
+							delfile(ConfigFolder .. "/configs/" .. SelectedConfig)
+							Library:Notification("Config Deleted: " .. SelectedConfig, 3, nil, "Top")
+							UpdateConfigList()
+							CFGList:Set()
+							if SelectedConfig == loadedcfgshit then
+								deletefile(ConfigFolder .. "/autoload.txt")
+								autoloadlabel:SetText("Current Auto Load: None")
+							end
+						else
+							Library:Notification("No Config Selected!", 3, nil, "Top")
+						end
+					end
+				})
+				Cfgs:Button({
+					Name = "Refresh",
+					Callback = function()
+						UpdateConfigList()
+						Library:Notification("Config List Refreshed", 3, nil, "Top")
+					end
+				})
+				UpdateConfigList()
+				autoloadlabel = Cfgs:Label({
+					Name = "Current Auto Load:",
+					Centered = true
+				})
+				if isfile(ConfigFolder .. "/autoload.txt") then
+					loadedcfgshit = readfile(ConfigFolder .. "/autoload.txt")
+					local configFile = ConfigFolder .. "/configs/" .. loadedcfgshit
+					if isfile(configFile) then
+						autoloadlabel:SetText("Current Auto Load: " .. loadedcfgshit)
+						Library:LoadConfig(readfile(configFile))
+						CFGList:Set(loadedcfgshit)
+					else
+						autoloadlabel:SetText("Current Auto Load: None")
+					end
+				else
+					autoloadlabel:SetText("Current Auto Load: None")
+				end
+			end
+			LocalPlayer.AncestryChanged:Connect(function(_, parent)
+				if not parent then
+					if #listfiles(ConfigFolder .. "/configs/") == 0 or (isfile(ConfigFolder .. "/configs/last settings") and #listfiles(ConfigFolder .. "/configs/") == 1) then
+						writefile(ConfigFolder .. "/configs/last settings", Library:GetConfig())
+						writefile(ConfigFolder .. "/autoload.txt", "last settings")
+					end
+				end
+			end)
+		end
 end
 -- // Color Picker Functions
 do
@@ -1058,7 +1234,7 @@ do
 			cursor.Visible = Library.Open
 		end)
         --
-		getgenv().KeybindList = Library:KeybindList()
+		Library.KeyshitList = Library:KeybindList()
 		Library.Holder = Outline
 		table.insert(Library.ThemeObjects, Accent)
 		Window.Elements = {
