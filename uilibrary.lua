@@ -808,35 +808,35 @@ function Library:LoadConfigTab(Window)
 			State = "Tokyo Night",
 			Callback = function(v)
 				local themes = {
-					['Quartz'] = {
+					Quartz = {
 						FontColor = "#FFFFFF",
 						MainColor = "#232330",
 						Accent = "#426E87",
 						BackgroundColor = "#1D1B26",
 						OutlineColor = "#27232F"
 					},
-					['BBot'] = {
+					BBot = {
 						FontColor = "#FFFFFF",
 						MainColor = "#1E1E1E",
 						Accent = "#7E48A3",
 						BackgroundColor = "#232323",
 						OutlineColor = "#141414"
 					},
-					['Fatality'] = {
+					Fatality = {
 						FontColor = "#FFFFFF",
 						MainColor = "#1E1842",
 						Accent = "#C50754",
 						BackgroundColor = "#191335",
 						OutlineColor = "#3C355D"
 					},
-					['Jester'] = {
+					Jester = {
 						FontColor = "#FFFFFF",
 						MainColor = "#242424",
 						Accent = "#DB4467",
 						BackgroundColor = "#1C1C1C",
 						OutlineColor = "#373737"
 					},
-					['Mint'] = {
+					Mint = {
 						FontColor = "#FFFFFF",
 						MainColor = "#242424",
 						Accent = "#3DB488",
@@ -850,7 +850,7 @@ function Library:LoadConfigTab(Window)
 						BackgroundColor = "#16161F",
 						OutlineColor = "#323232"
 					},
-					['Ubuntu'] = {
+					Ubuntu = {
 						FontColor = "#FFFFFF",
 						MainColor = "#3E3E3E",
 						Accent = "#E2581E",
@@ -1451,6 +1451,7 @@ do
 				UDim2.new(0, 0, 0, 0)
 			};
 			Size = Options.Size or Options.size or UDim2.new(0, 550, 0, 600);
+			Name = Options.Name or "soulhub"
 		};
 		Library.ScreenGui = Library:Create("ScreenGui", {
 			Parent = gethui(),
@@ -1514,7 +1515,7 @@ do
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
 			BorderColor3 = Color3.new(0, 0, 0),
-			Text = "soulhub",
+			Text = Window.Name,
 			TextColor3 = "Accent",
 			AutoButtonColor = false,
 			FontFace = Library.Font,
