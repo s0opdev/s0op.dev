@@ -781,68 +781,196 @@ function Library:LoadConfigTab(Window)
 		})
 		PresetThemes:Dropdown({
 			Name = "Presets",
-			Options = {"Tokyo Night", "BBot", "Fatality", "Jester", "Mint", "Ubuntu", "Quartz"},
+			Options = {
+				"Tokyo Night",
+				"Quartz",
+				"BBot",
+				"Fatality",
+				"Jester",
+				"Mint",
+				"Ubuntu",
+				"Abyss",
+				"Neverlose",
+				"Aimware",
+				"Youtube",
+				"Gamesense",
+				"Onetap",
+				"Entropy",
+				"Interwebz",
+				"Dracula",
+				"Spotify",
+				"Sublime",
+				"Vape",
+				"Neko",
+				"Corn",
+				"Minecraft"
+			},
 			State = "Tokyo Night",
 			Callback = function(v)
 				local themes = {
 					['Quartz'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(35, 35, 48),
-						Accent = Color3.fromRGB(66, 110, 135),
-						BackgroundColor = Color3.fromRGB(29, 27, 38),
-						OutlineColor = Color3.fromRGB(39, 35, 47)
+						FontColor = "#FFFFFF",
+						MainColor = "#232330",
+						Accent = "#426E87",
+						BackgroundColor = "#1D1B26",
+						OutlineColor = "#27232F"
 					},
 					['BBot'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(30, 30, 30),
-						Accent = Color3.fromRGB(126, 72, 163),
-						BackgroundColor = Color3.fromRGB(35, 35, 35),
-						OutlineColor = Color3.fromRGB(20, 20, 20)
+						FontColor = "#FFFFFF",
+						MainColor = "#1E1E1E",
+						Accent = "#7E48A3",
+						BackgroundColor = "#232323",
+						OutlineColor = "#141414"
 					},
 					['Fatality'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(30, 24, 66),
-						Accent = Color3.fromRGB(197, 7, 84),
-						BackgroundColor = Color3.fromRGB(25, 19, 53),
-						OutlineColor = Color3.fromRGB(60, 53, 93)
+						FontColor = "#FFFFFF",
+						MainColor = "#1E1842",
+						Accent = "#C50754",
+						BackgroundColor = "#191335",
+						OutlineColor = "#3C355D"
 					},
 					['Jester'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(36, 36, 36),
-						Accent = Color3.fromRGB(219, 68, 103),
-						BackgroundColor = Color3.fromRGB(28, 28, 28),
-						OutlineColor = Color3.fromRGB(55, 55, 55)
+						FontColor = "#FFFFFF",
+						MainColor = "#242424",
+						Accent = "#DB4467",
+						BackgroundColor = "#1C1C1C",
+						OutlineColor = "#373737"
 					},
 					['Mint'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(36, 36, 36),
-						Accent = Color3.fromRGB(61, 180, 136),
-						BackgroundColor = Color3.fromRGB(28, 28, 28),
-						OutlineColor = Color3.fromRGB(55, 55, 55)
+						FontColor = "#FFFFFF",
+						MainColor = "#242424",
+						Accent = "#3DB488",
+						BackgroundColor = "#1C1C1C",
+						OutlineColor = "#373737"
 					},
 					['Tokyo Night'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(25, 25, 37),
-						Accent = Color3.fromRGB(103, 89, 179),
-						BackgroundColor = Color3.fromRGB(22, 22, 31),
-						OutlineColor = Color3.fromRGB(50, 50, 50)
+						FontColor = "#FFFFFF",
+						MainColor = "#191925",
+						Accent = "#6759B3",
+						BackgroundColor = "#16161F",
+						OutlineColor = "#323232"
 					},
 					['Ubuntu'] = {
-						FontColor = Color3.fromRGB(255, 255, 255),
-						MainColor = Color3.fromRGB(62, 62, 62),
-						Accent = Color3.fromRGB(226, 88, 30),
-						BackgroundColor = Color3.fromRGB(50, 50, 50),
-						OutlineColor = Color3.fromRGB(25, 25, 25)
+						FontColor = "#FFFFFF",
+						MainColor = "#3E3E3E",
+						Accent = "#E2581E",
+						BackgroundColor = "#323232",
+						OutlineColor = "#191919"
+					},
+					['Abyss'] = {
+						FontColor = "#FFFFFF",
+						MainColor = "#1E1E1E",
+						Accent = "#8C87B4",
+						BackgroundColor = "#2D2D2D",
+						OutlineColor = "#0A0A0A"
+					},
+					['Neverlose'] = {
+						FontColor = "#FFFFFF",
+						MainColor = "#000F1E",
+						Accent = "#00B4F0",
+						BackgroundColor = "#0A1E28",
+						OutlineColor = "#000005"
+					},
+					['Aimware'] = {
+						FontColor = "#E8E8E8",
+						MainColor = "#2B2B2B",
+						Accent = "#C82828",
+						BackgroundColor = "#373737",
+						OutlineColor = "#000005"
+					},
+					['Youtube'] = {
+						FontColor = "#F1F1F1",
+						MainColor = "#232323",
+						Accent = "#FF0000",
+						BackgroundColor = "#393939",
+						OutlineColor = "#000000"
+					},
+					['Gamesense'] = {
+						FontColor = "#FFFFFF",
+						MainColor = "#171717",
+						Accent = "#A7D94D",
+						BackgroundColor = "#282828",
+						OutlineColor = "#000000"
+					},
+					['Onetap'] = {
+						FontColor = "#D6D9E0",
+						MainColor = "#2C3037",
+						Accent = "#DDA85D",
+						BackgroundColor = "#4E5158",
+						OutlineColor = "#000000"
+					},
+					['Entropy'] = {
+						FontColor = "#DCDCDC",
+						MainColor = "#3D3A43",
+						Accent = "#81BBE9",
+						BackgroundColor = "#4C4A52",
+						OutlineColor = "#0A0A0A"
+					},
+					['Interwebz'] = {
+						FontColor = "#FCFCFC",
+						MainColor = "#291F38",
+						Accent = "#C9654B",
+						BackgroundColor = "#40364F",
+						OutlineColor = "#1A1A1A"
+					},
+					['Dracula'] = {
+						FontColor = "#B4B4B8",
+						MainColor = "#2A2C38",
+						Accent = "#9A81B3",
+						BackgroundColor = "#3C384D",
+						OutlineColor = "#202126"
+					},
+					['Spotify'] = {
+						FontColor = "#D0D0D0",
+						MainColor = "#181818",
+						Accent = "#1ED760",
+						BackgroundColor = "#292929",
+						OutlineColor = "#0A0A0A"
+					},
+					['Sublime'] = {
+						FontColor = "#E8FFFF",
+						MainColor = "#32332D",
+						Accent = "#FF9800",
+						BackgroundColor = "#484944",
+						OutlineColor = "#000000"
+					},
+					['Vape'] = {
+						FontColor = "#DCDCDC",
+						MainColor = "#1F1F1F",
+						Accent = "#26866A",
+						BackgroundColor = "#363636",
+						OutlineColor = "#0A0A0A"
+					},
+					['Neko'] = {
+						FontColor = "#FFFFFF",
+						MainColor = "#171717",
+						Accent = "#D21F6A",
+						BackgroundColor = "#2D2D2D",
+						OutlineColor = "#000000"
+					},
+					['Corn'] = {
+						FontColor = "#DCDCDC",
+						MainColor = "#252525",
+						Accent = "#FF9000",
+						BackgroundColor = "#333333",
+						OutlineColor = "#000000"
+					},
+					['Minecraft'] = {
+						FontColor = "#FFFFFF",
+						MainColor = "#333333",
+						Accent = "#27CE40",
+						BackgroundColor = "#333333",
+						OutlineColor = "#000000"
 					}
 				}
+				
+
 				local selectedTheme = themes[v]
 				if selectedTheme then
-					Library.FontColor = selectedTheme.FontColor
-					Library.MainColor = selectedTheme.MainColor
-					Library.Accent = selectedTheme.Accent
+					for i,v in pairs(selectedTheme) do
+						Library[i] = Color3.fromHex(v)
+					end
 					Library.DarkerAccent = Library:GetDarkerColor(Library.Accent)
-					Library.BackgroundColor = selectedTheme.BackgroundColor
-					Library.OutlineColor = selectedTheme.OutlineColor
 					fontcolor:Set(Library.FontColor)
 					maincolor:Set(Library.MainColor)
 					accentcolor:Set(Library.Accent)
@@ -2811,7 +2939,7 @@ do
 		})
 		local UIListLayout = Library:Create('UIListLayout', {
 			Parent = ContainerInline,
-			SortOrder = Enum.SortOrder.LayoutOrder
+			SortOrder = Enum.SortOrder.LayoutOrder,
 		})
         
         -- // Connections
@@ -2926,15 +3054,8 @@ do
 				})
                 --
 				if #tbl ~= 0 then
-					if #tbl == 1 then
-						ContainerOutline.Size = UDim2.new(1, -30, 0, 16.5)
-					elseif #tbl == 2 then
-						ContainerOutline.Size = UDim2.new(1, -30, 0, 31.25)
-					elseif #tbl == 3 then 
-						ContainerOutline.Size = UDim2.new(1, -30, 0, 45)
-					else
-						ContainerOutline.Size = UDim2.new(1, -30, 0, 60)
-					end
+					local typeshit = #tbl * 15.5
+					ContainerOutline.Size = UDim2.new(1,-30,0,math.clamp(typeshit,0,155))
 				end
 				Dropdown.OptionInsts[option].button = NewOption
 				Dropdown.OptionInsts[option].text = OptionName
