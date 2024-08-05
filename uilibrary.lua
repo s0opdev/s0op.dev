@@ -3,7 +3,7 @@ local Library = {
 	Accent = Color3.fromHex("6759b3");
 	DarkerAccent = nil;
 	FontColor = Color3.fromHex("ffffff");
-	OutlineColor = Color3.fromHex("323232");
+	OutlineColor = Color3.fromHex("323232");	
 	MainColor = Color3.fromHex("191925");
 	BackgroundColor = Color3.fromHex("16161f");
 	Pages = {};
@@ -15,6 +15,7 @@ local Library = {
 	Holder = nil;
 	PageHolder = nil;
 	RegistryMap = {};
+	Toggles = {};
 	Keys = {
 		[Enum.KeyCode.LeftShift] = "LShift",
 		[Enum.KeyCode.RightShift] = "RShift",
@@ -172,32 +173,16 @@ function Library:Connection(Signal, Callback)
 	table.insert(Library.Connections, Con)
 	return Con
 end
-function Library:SetFlagsToDefault()
-	local defaultValues = {
-		["bool"] = false,
-		["string"] = "",
-		["number"] = 0,
-		["table"] = {},
-		["Color3"] = "rgb(0,0,0,1)",
-		["Enum"] = Enum.KeyCode.Home
-	}
-	for flagName, flag in pairs(Flags) do
-		local defaultValue = defaultValues[typeof(Library.Flags[flagName])] or defaultValues["string"]
-		if not string.find(flagName, "MenuKey") then
-			if typeof(flag) == "table" then
-				if flag.Set then
-					flag:Set(defaultValue)
-				end
-			else
-				Flags[flagName](defaultValue)
-			end
-		end
-	end
-end
+
 function Library:Unload()
 	Library:SetOpen()
 	task.wait(0.2)
-	self:SetFlagsToDefault()
+	for i, _ in pairs(Flags) do
+		local toggle = Library.Toggles[i]
+		if toggle then
+			toggle:Set(false)
+		end
+    end
 	self.ScreenGui:Destroy()
 	for _, v in ipairs(Library.Connections) do
 		v:Disconnect()
@@ -2192,17 +2177,6 @@ do
 				Title.TextColor3 = Toggle.Toggled and Library.FontColor or Color3.fromRGB(145, 145, 145)
 			end
 		end)		
-		function Toggle.Set(bool)
-			bool = type(bool) == "boolean" and bool or false
-			if Toggle.Toggled ~= bool then
-				SetState()
-				if Toggle.Risky then
-					Title.TextColor3 = Toggle.Toggled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(255, 77, 74)
-				else
-					Title.TextColor3 = Toggle.Toggled and Library.FontColor or Color3.fromRGB(145, 145, 145)
-				end
-			end
-		end		
 		function Toggle:Keybind(Properties)
 			local Properties = Properties or {}
 			local Keybind = {
@@ -2540,11 +2514,22 @@ do
             -- // Returning
 			return Colorpicker
 		end
-
+		function Toggle.Set(bool)
+			bool = type(bool) == "boolean" and bool or false
+			if Toggle.Toggled ~= bool then
+				SetState()
+				if Toggle.Risky then
+					Title.TextColor3 = Toggle.Toggled and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(255, 77, 74)
+				else
+					Title.TextColor3 = Toggle.Toggled and Library.FontColor or Color3.fromRGB(145, 145, 145)
+				end
+			end
+		end
         -- // Misc Functions
 		Toggle.Set(Toggle.State)
 		Library.Flags[Toggle.Flag] = Toggle.State
 		Flags[Toggle.Flag] = Toggle.Set
+		Library.Toggles[Toggle.Flag] = Toggle
 
         -- // Returning
 		return Toggle
