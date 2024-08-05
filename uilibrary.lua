@@ -107,22 +107,8 @@ end
 if not isfile(Library.Folder .. "cursor.jpg") then
 	writefile(Library.Folder .. "cursor.jpg", game:HttpGet("https://raw.githubusercontent.com/s0opdev/s0op.dev/main/cursor.png?raw=true"))
 end
-if not isfile(Library.Folder .. "ProggyClean.ttf") then
-	writefile(Library.Folder .. "ProggyClean.ttf", game:HttpGet("https://raw.githubusercontent.com/s0opdev/s0op.dev/main/ProggyClean.ttf?raw=true"))
-end
 if not isfile(Library.Folder .. "ProggyClean.font") then
-	local Data = {
-		name = "ProggyClean",
-		faces = {
-			{
-				name = "Regular",
-				weight = 200,
-				style = "normal",
-				assetId = getcustomasset(Library.Folder .. "ProggyClean.ttf"),
-			},
-		},
-	}
-	writefile(Library.Folder .. "ProggyClean.font", httpserv:JSONEncode(Data))
+	writefile(Library.Folder .. "ProggyClean.font", game:HttpGet("https://raw.githubusercontent.com/s0opdev/s0op.dev/main/ProggyClean.font?raw=true"))
 end
 
 Library.Font = Font.new(getcustomasset(Library.Folder .. "ProggyClean.font"))
