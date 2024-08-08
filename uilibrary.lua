@@ -699,9 +699,11 @@ function Library:LoadConfigTab(Window)
 			local List = {}
 			local SelectedConfig = Library.Flags.SettingConfigurationList
 			for idx, file in ipairs(listfiles(ConfigFolder .. "/configs")) do
-				local FileName = file:gsub(ConfigFolder .. "/configs/", "")
+				local FileName = file:gsub("\\", "/")
+				FileName = FileName:match("([^/]+)$")
 				List[#List + 1] = FileName
 			end
+			
 			local IsNew = #List ~= #CurrentList
 			if not IsNew then
 				for idx, file in ipairs(List) do
