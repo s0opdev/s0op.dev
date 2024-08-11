@@ -75,7 +75,7 @@ local Library = {
 	Window = nil;
 	Folder = "soulhub/"
 }
-
+local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players");
 local userinput = game:GetService("UserInputService");
 local tweenserv = game:GetService("TweenService")
@@ -84,7 +84,8 @@ local httpserv = game:GetService("HttpService")
 local Flags = {}; 
 local LocalPlayer = Players.LocalPlayer;
 local Mouse = LocalPlayer:GetMouse();
-local viewportSize = game.Workspace.Camera.ViewportSize;
+local Camera = Workspace:FindFirstChildOfClass("Camera");
+local viewportSize = Camera.ViewportSize;
 local ProtectGui = protectgui or (function()
 end);
 local NewVector2 = Vector2.new;
