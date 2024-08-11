@@ -1329,26 +1329,27 @@ function Library:NewPicker(default, parent, count, flag, callback)
 		callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
 	end
 	local function set(color)
-		if type(color) == "boolean" then return end
-		if type(color) == "table" then
-			color = Color3.fromHSV(color[1], color[2], color[3])
-		end
-		if type(color) == "string" then
-			color = Color3.new(color)
-		end
-		local oldcolor = hsv
-		hue, sat, val = color:ToHSV()
-		hsv = Color3.fromHSV(hue, sat, val)
-		if hsv ~= oldcolor then
-			IconInline.BackgroundColor3 = hsv
-			Color.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
-			Pointer.Position = UDim2.new(math.clamp(1 - sat, 0.005, 0.995), 0, math.clamp(1 - val, 0.005, 0.995), 0)
-			HueSlide.Position = UDim2.new(0, 0, math.clamp(hue, 0.005, 0.995), 0)
-			if flag then
-				Library.Flags[flag] = {}
-				Library.Flags[flag]["Color"] = Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255)
+		if type(color) ~= "boolean" then
+			if type(color) == "table" then
+				color = Color3.fromHSV(color[1], color[2], color[3])
 			end
-			callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
+			if type(color) == "string" then
+				color = Color3.new(color)
+			end
+			local oldcolor = hsv
+			hue, sat, val = color:ToHSV()
+			hsv = Color3.fromHSV(hue, sat, val)
+			if hsv ~= oldcolor then
+				IconInline.BackgroundColor3 = hsv
+				Color.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
+				Pointer.Position = UDim2.new(math.clamp(1 - sat, 0.005, 0.995), 0, math.clamp(1 - val, 0.005, 0.995), 0)
+				HueSlide.Position = UDim2.new(0, 0, math.clamp(hue, 0.005, 0.995), 0)
+				if flag then
+					Library.Flags[flag] = {}
+					Library.Flags[flag]["Color"] = Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255)
+				end
+				callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
+			end
 		end
 	end
 	Flags[flag] = set
