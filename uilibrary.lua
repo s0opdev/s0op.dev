@@ -1329,6 +1329,7 @@ function Library:NewPicker(default, parent, count, flag, callback)
 		callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
 	end
 	local function set(color)
+		if type(color) == "boolean" then return end
 		if type(color) == "table" then
 			color = Color3.fromHSV(color[1], color[2], color[3])
 		end
