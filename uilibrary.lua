@@ -725,6 +725,7 @@ function Library:LoadConfigTab(Window)
 		end
 		PresetThemes:Dropdown({
 			Name = "Presets",
+			Flag = "UI/Presets",
 			Options = {
 				"Tokyo Night",
 				"Quartz",
