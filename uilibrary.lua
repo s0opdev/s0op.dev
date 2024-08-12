@@ -683,11 +683,11 @@ function Library:LoadConfigTab(Window)
 		local Menu = Config:Section({
 			Name = "Menu"
 		})
-		local Themes = Config:Section({
-			Name = "Themes Configuration"
-		})
 		local PresetThemes = Config:Section({
 			Name = "Preset Themes"
+		})
+		local Themes = Config:Section({
+			Name = "Themes Configuration"
 		})
 		local Cfgs = Config:Section({
 			Name = "Configs",
@@ -695,7 +695,7 @@ function Library:LoadConfigTab(Window)
 		})
 		local abc = false
 		local CurrentList = {}
-		local CFGList, loadedcfgshit, autoloadlabel, randomfunc
+		local CFGList, loadedcfgshit, autoloadlabel, randomfunc, maincolor, backgroundcolor, outlinecolor, fontcolor
 		local function UpdateConfigList()
 			local List = {}
 			local SelectedConfig = Library.Flags.SettingConfigurationList
@@ -723,47 +723,6 @@ function Library:LoadConfigTab(Window)
 				CFGList:Set(SelectedConfig)
 			end
 		end
-		local maincolor = Themes:Colorpicker({
-			Name = "Main Color",
-			State = Library.MainColor,
-			Callback = function(v)
-				Library.MainColor = v
-				Library:ChangeAccent()
-			end
-		})
-		local backgroundcolor = Themes:Colorpicker({
-			Name = "Background Color",
-			State = Library.BackgroundColor,
-			Callback = function(v)
-				Library.BackgroundColor = v
-				Library:ChangeAccent()
-			end
-		})
-		local accentcolor = Themes:Colorpicker({
-			Name = "Accent Color",
-			State = Library.Accent,
-			Callback = function(v)
-				Library.Accent = v
-				Library.DarkerAccent = Library:GetDarkerColor(Library.Accent)
-				Library:ChangeAccent()
-			end
-		})
-		local outlinecolor = Themes:Colorpicker({
-			Name = "Outline Color",
-			State = Library.OutlineColor,
-			Callback = function(v)
-				Library.OutlineColor = v
-				Library:ChangeAccent()
-			end
-		})
-		local fontcolor = Themes:Colorpicker({
-			Name = "Font Color",
-			State = Library.FontColor,
-			Callback = function(v)
-				Library.FontColor = v
-				Library:ChangeAccent()
-			end
-		})
 		PresetThemes:Dropdown({
 			Name = "Presets",
 			Options = {
@@ -962,6 +921,52 @@ function Library:LoadConfigTab(Window)
 					backgroundcolor:Set(Library.BackgroundColor)
 					Library:ChangeAccent()
 				end
+			end
+		})
+		maincolor = Themes:Colorpicker({
+			Name = "Main Color",
+			flag = "UI/MainColor",
+			State = Library.MainColor,
+			Callback = function(v)
+				Library.MainColor = v
+				Library:ChangeAccent()
+			end
+		})
+		backgroundcolor = Themes:Colorpicker({
+			Name = "Background Color",
+			Flag = "UI/BackgroundColor",
+			State = Library.BackgroundColor,
+			Callback = function(v)
+				Library.BackgroundColor = v
+				Library:ChangeAccent()
+			end
+		})
+		accentcolor = Themes:Colorpicker({
+			Name = "Accent Color",
+			Flag = "UI/AccentColor",
+			State = Library.Accent,
+			Callback = function(v)
+				Library.Accent = v
+				Library.DarkerAccent = Library:GetDarkerColor(Library.Accent)
+				Library:ChangeAccent()
+			end
+		})
+		outlinecolor = Themes:Colorpicker({
+			Name = "Outline Color",
+			Flag = "UI/OutlineColor",
+			State = Library.OutlineColor,
+			Callback = function(v)
+				Library.OutlineColor = v
+				Library:ChangeAccent()
+			end
+		})
+		fontcolor = Themes:Colorpicker({
+			Name = "Font Color",
+			Flag = "UI/FontColor",
+			State = Library.FontColor,
+			Callback = function(v)
+				Library.FontColor = v
+				Library:ChangeAccent()
 			end
 		})
 		Menu:Keybind({
