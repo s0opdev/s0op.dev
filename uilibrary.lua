@@ -915,11 +915,21 @@ function Library:LoadConfigTab(Window)
 						Library[i] = Color3.fromHex(v)
 					end
 					Library.DarkerAccent = Library:GetDarkerColor(Library.Accent)
-					fontcolor:Set(Library.FontColor)
-					maincolor:Set(Library.MainColor)
-					accentcolor:Set(Library.Accent)
-					outlinecolor:Set(Library.OutlineColor)
-					backgroundcolor:Set(Library.BackgroundColor)
+					if fontcolor then
+						fontcolor:Set(Library.FontColor)
+					end
+					if maincolor then
+						maincolor:Set(Library.MainColor)
+					end
+					if accentcolor then
+						accentcolor:Set(Library.Accent)
+					end
+					if outlinecolor then
+						outlinecolor:Set(Library.OutlineColor)
+					end
+					if 	backgroundcolor then
+						backgroundcolor:Set(Library.BackgroundColor)
+					end
 					Library:ChangeAccent()
 				end
 			end
