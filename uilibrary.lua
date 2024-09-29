@@ -1454,7 +1454,7 @@ do
 				UDim2.new(0, 0, 0, 0)
 			};
 			Size = Options.Size or Options.size or UDim2.new(0, 550, 0, 600);
-			Name = Options.Name or "soulhub"
+			Name = Options.Name or "soulhub | " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 		};
 		Library.ScreenGui = Library:Create("ScreenGui", {
 			Parent = gethui(),
