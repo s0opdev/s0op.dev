@@ -181,11 +181,14 @@ function Library:Unload()
 			toggle:Set(false)
 		end
     end
+	task.wait()
 	self.ScreenGui:Destroy()
+	task.wait()
 	for _, v in ipairs(Library.Connections) do
 		v:Disconnect()
 	end
 	self.Connections = {}
+	task.wait()
 	userinput.MouseIconEnabled = true
 end
 --
@@ -654,9 +657,9 @@ function Library:KeybindList()
 			UpdateSize()
 		end
 		local iscolor = false
-		function KeyValue:SetColorBlue(fuck)
-			if fuck then
-				iscolor = fuck
+		function KeyValue:SetColorBlue(hi)
+			if hi then
+				iscolor = hi
 			else
 				iscolor = not iscolor
 			end
@@ -3008,16 +3011,22 @@ do
 						task.spawn(Dropdown.Callback, chosen)
 					end
 				else
-					for opt, tbl in next, Dropdown.OptionInsts do
-						if opt ~= option then
+					if chosen == option then
+						chosen = nil
+						Value.Text = ""
+						text.TextColor3 = Color3.fromRGB(145, 145, 145)
+					else
+						for opt, tbl in next, Dropdown.OptionInsts do
 							tbl.text.TextColor3 = Color3.fromRGB(145, 145, 145)
 						end
+						-- Select the new option
+						chosen = option
+						Value.Text = option
+						text.TextColor3 = Color3.fromRGB(255, 255, 255)
 					end
-					chosen = option
-					Value.Text = option
-					text.TextColor3 = Color3.fromRGB(255, 255, 255)
+		
 					Library.Flags[Dropdown.Flag] = option
-					task.spawn(Dropdown.Callback, option)
+					task.spawn(Dropdown.Callback, chosen)
 				end
 			end)
 		end
