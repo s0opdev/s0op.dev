@@ -657,9 +657,9 @@ function Library:KeybindList()
 			UpdateSize()
 		end
 		local iscolor = false
-		function KeyValue:SetColorBlue(hi)
-			if hi then
-				iscolor = hi
+		function KeyValue:SetColorBlue(fuck)
+			if fuck then
+				iscolor = fuck
 			else
 				iscolor = not iscolor
 			end
@@ -3025,7 +3025,7 @@ do
 						text.TextColor3 = Color3.fromRGB(255, 255, 255)
 					end
 		
-					Library.Flags[Dropdown.Flag] = option
+					Library.Flags[Dropdown.Flag] = chosen
 					task.spawn(Dropdown.Callback, chosen)
 				end
 			end)
